@@ -1,3 +1,5 @@
+import 'dotenv/config'
+import { ObjectId } from "mongodb";
 import conectarAoBanco from "../config/dbConfig.js"; // Importa a função para conectar ao banco de dados MongoDB a partir de um arquivo de configuração
 
 const conexao = await conectarAoBanco(process.env.STRING_CONEXAO)  // Conecta ao banco de dados MongoDB usando a string de conexão fornecida no ambiente
@@ -12,4 +14,11 @@ export async function criarPost(novoPost) {
     const db = conexao.db("imensao-instabyte");
     const colecao = db.collection("posts");  
     return colecao.insertOne(novoPost)
+}
+
+export async function atualizarPost(id ,novoPost) {
+    const db = conexao.db("imensao-instabyte");
+    const colecao = db.collection("posts");  
+    const objID = ObjectId.createFromHexString(id)
+    return colecao.updateOne({_id: new ObjectId(objID)}, {$set: novoPost})
 }

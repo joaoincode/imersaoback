@@ -2,6 +2,7 @@ import express from "express";  // Importa o módulo Express para criar um servi
 import routes from "./src/routes/postsRoutes.js";
 
 const app = express(); // Cria uma instância do aplicativo Express
+app.use(express.static("uploads"))
 routes(app)
 
 app.listen(3000, () => {           // Inicia o servidor e escuta por conexões na porta 3000
